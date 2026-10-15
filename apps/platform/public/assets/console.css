@@ -42,7 +42,7 @@ body.k-app .k-rail .k-repos a { font-size: 12px; }
 body.k-app .k-rail .k-foot { margin-top: auto; padding-top: var(--s3); border-top: 1px solid var(--hairline); }
 body.k-app .k-rail .k-foot p { margin: 0; padding: 6px var(--s4); }
 body.k-app .k-main { min-width: 0; }
-body.k-app .k-legacy-content, body.k-app .k-repo-content { display: grid; align-content: start; gap: var(--s4); min-width: 0; padding: var(--s5) var(--s6) var(--s7); }
+body.k-app .k-legacy-content, body.k-app .k-repo-content { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: var(--s4); min-width: 0; padding: var(--s5) var(--s6) var(--s7); }
 body.k-app .k-legacy-content > .card, body.k-app .k-repo-content > .card { margin-bottom: 0; }
 body.k-app .k-repo-content > .crumbs { padding: 0; }
 body.k-app .k-top-slim { grid-template-columns: auto minmax(0, 1fr) auto; }
@@ -73,7 +73,7 @@ body.k-app .repo-page-head .k-head-side { flex-basis: min(520px, 48%); }
 body.k-app .k-head-copy { min-width: 260px; flex: 1 1 360px; }
 body.k-app .k-head h1 { margin: var(--s3) 0 0; color: var(--bone); font: 800 clamp(28px, 3vw, 44px)/.95 var(--f-sans); font-stretch: 125%; letter-spacing: -.03em; text-transform: uppercase; overflow-wrap: anywhere; }
 body.k-app .k-head h1 .ink { color: var(--signal); }
-body.k-app .k-head .lede { max-width: 62ch; margin: var(--s3) 0 0; color: var(--silver); font-size: 15px; }
+body.k-app .k-head .lede { max-width: 62ch; min-width: 0; overflow-wrap: anywhere; margin: var(--s3) 0 0; color: var(--silver); font-size: 15px; }
 body.k-app .k-head .lede.k-mono { font-size: 12px; }
 body.k-app .k-head-side { display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; gap: var(--s3); flex: 0 1 auto; }
 body.k-app .k-head-actions, body.k-app .actions { display: flex; align-items: center; gap: var(--s2); flex-wrap: wrap; }
@@ -85,7 +85,7 @@ body.k-app .k-kpis > div { display: grid; gap: 6px; min-width: 88px; padding: 10
 body.k-app .k-kpis > div:first-child { border-left: 0; }
 body.k-app .k-kpis b { color: var(--bone); font: 500 20px/1 var(--f-mono); }
 body.k-app .k-kpis b.warn { color: var(--heat-4); }
-body.k-app .k-content { display: grid; gap: var(--s5); padding: var(--s5) var(--s6) var(--s7); }
+body.k-app .k-content { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s5); padding: var(--s5) var(--s6) var(--s7); }
 body.k-app .k-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--s5); padding: var(--s5) var(--s6) var(--s7); }
 body.k-app .k-content > .k-grid { padding: 0; }
 body.k-app .k-col { display: grid; gap: var(--s5); align-content: start; min-width: 0; }
@@ -272,7 +272,7 @@ body.k-app .k-group-help + .k-inbox-item, body.k-app .panel-head + .k-inbox-item
 body.k-app .k-inbox-item::before { content: ''; background: var(--hairline-2); }
 body.k-app .k-inbox-item.heat::before { background: var(--heat-4); }
 body.k-app .k-inbox-item.signal::before { background: var(--signal); }
-body.k-app .k-inbox-body { display: grid; gap: var(--s2); min-width: 0; }
+body.k-app .k-inbox-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s2); min-width: 0; }
 body.k-app .k-inbox-body p { margin: 0; }
 body.k-app .k-inbox-body h3 { margin: 0; font: 500 var(--t-md)/1.35 var(--f-sans); overflow-wrap: anywhere; }
 body.k-app .k-inbox-body h3 a { color: var(--bone); }
@@ -334,14 +334,14 @@ body.k-app .k-nexus .field-side { display: grid; align-content: start; gap: var(
 body.k-app .k-nexus .intents { margin: 0; padding: 0; list-style: none; }
 body.k-app .k-nexus .intents li { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: start; gap: var(--s3); padding: var(--s3); border-top: 1px solid var(--hairline); font-size: 13px; }
 body.k-app .k-nexus .intents li:first-child { border-top: 0; }
-body.k-app .k-nexus .intents b { display: block; font-weight: 500; }
+body.k-app .k-nexus .intents b { display: block; font-weight: 500; min-width: 0; overflow-wrap: anywhere; }
 body.k-app .k-nexus .intents b a { color: var(--bone); }
 body.k-app .k-nexus .intents .hud { color: var(--steel); overflow-wrap: anywhere; }
 body.k-app .k-nexus .st { border: 1px solid var(--hairline-2); color: var(--silver); font: 400 10px/1 var(--f-hud); padding: 4px 0; text-align: center; }
 body.k-app .k-nexus .st4 { background: var(--signal); border-color: var(--signal); color: #fff; }
 body.k-app .k-nexus .st3 { border-color: var(--signal); color: var(--signal-hi); }
 body.k-app .k-nexus .st2 { color: var(--steel); }
-body.k-app .k-nexus .needs { margin: 0; padding: var(--s3); color: var(--silver); font-size: 13px; line-height: 1.55; }
+body.k-app .k-nexus .needs { margin: 0; min-width: 0; overflow-wrap: anywhere; padding: var(--s3); color: var(--silver); font-size: 13px; line-height: 1.55; }
 body.k-app .k-nexus .needs b { color: var(--bone); font-weight: 500; }
 body.k-app .k-nexus-note { margin: 0; padding: 0 var(--s5) var(--s4); font-size: 12px; }
 @media (max-width: 1100px) { body.k-app .k-nexus .field-body { grid-template-columns: minmax(0, 1fr); } }
