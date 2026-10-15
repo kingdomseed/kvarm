@@ -23,7 +23,7 @@ import {
   type RefCommand,
   type RefUpdateResult,
 } from '@kvarm/gitops';
-import { getGitToken } from '../artifacts/tokens';
+import { artifactsAuthorization, getGitToken } from '../artifacts/tokens';
 import type { RepoRow } from '../db/repos';
 import { recordConfirmedPush } from './pushFreshness';
 import { RefStoreUnavailable } from './refs';
@@ -77,7 +77,7 @@ export function artifactsPusher(env: Env, repo: PushTarget, opts: GitPusherOptio
     }
     return {
       url: repo.artifacts_remote,
-      authorization: `Basic ${btoa(`kvarm:${token}`)}`,
+      authorization: artifactsAuthorization(token),
       ...(opts.fetch ? { fetch: opts.fetch } : {}),
     };
   };

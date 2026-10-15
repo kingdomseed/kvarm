@@ -300,6 +300,7 @@ export function installFakeGitRemote(): void {
     const req = new Request(input, init);
     const url = new URL(req.url);
     if (url.hostname !== 'artifacts.invalid') return originalFetch(input, init);
+    if (!req.headers.get('authorization')?.startsWith('Bearer ')) return new Response('unauthorized', { status: 401 });
     const rp = /^\/git\/default\/(.+)\.git\/git-receive-pack$/.exec(url.pathname);
     if (rp) {
       const target = fakeRepos.get(rp[1]!);

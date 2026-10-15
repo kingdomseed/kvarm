@@ -20,7 +20,7 @@
 import type { Context } from 'hono';
 import type { RepoRow } from '../db/repos';
 import { parseBasicAuth } from '../auth/pat';
-import { getGitToken } from '../artifacts/tokens';
+import { artifactsAuthorization, getGitToken, purgeGitTokens } from '../artifacts/tokens';
 import { gitRateLimit } from '../ratelimit';
 import { markCache } from '../cost/meter';
 import { withPrivateCacheControl } from '../cache/scope';
@@ -252,7 +252,7 @@ export async function handleGitRequest(
   upstream.search = url.search;
 
   const headers = new Headers();
-  headers.set('Authorization', `Basic ${btoa(`kvarm:${artifactsToken}`)}`);
+  headers.set('Authorization', artifactsAuthorization(artifactsToken));
   for (const h of ['content-type', 'accept', 'git-protocol', 'user-agent']) {
     const v = c.req.raw.headers.get(h);
     if (v) headers.set(h, v);
@@ -263,6 +263,16 @@ export async function handleGitRequest(
     init.body = pushBody ?? uploadBody ?? c.req.raw.body;
   }
   const upstreamRes = await fetch(upstream.toString(), init);
+
+  // The caller is already authorized, so a refusal is the platform token's
+  // fault. Relayed as 401, git would prompt and then erase the user's PAT.
+  // Dropping the cached token lets the next request mint a fresh one.
+  if (upstreamRes.status === 401 || upstreamRes.status === 403) {
+    await upstreamRes.body?.cancel();
+    console.warn(JSON.stringify({ gitUpstreamRefused: upstreamRes.status, subpath }));
+    await purgeGitTokens(repo.artifacts_name);
+    return new Response('repository storage refused the request, retry shortly\n', { status: 502 });
+  }
 
   // Briefly edge-cache public clone bootstrapping.
   if (cacheKey && upstreamRes.status === 200) {

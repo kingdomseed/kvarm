@@ -86,7 +86,15 @@ export async function getReadCapableToken(
   return getGitToken(env, artifactsName, 'read', handle);
 }
 
-/** Drops this colo's token copies, e.g. when the repo is deleted. */
+/**
+ * Artifacts accepts the full token, `?expires=` suffix included, only as a
+ * Bearer credential (https://developers.cloudflare.com/artifacts/api/git-protocol/#authentication).
+ */
+export function artifactsAuthorization(token: string): string {
+  return `Bearer ${token}`;
+}
+
+/** Drops this colo's token copies, e.g. when the repo is deleted or Artifacts refuses one. */
 export async function purgeGitTokens(artifactsName: string): Promise<void> {
   await Promise.all([deleteCached(tokenKey(artifactsName, 'read')), deleteCached(tokenKey(artifactsName, 'write'))]);
 }
