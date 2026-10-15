@@ -14,7 +14,8 @@ body.k-app .k-top .brand { display: flex; align-items: center; gap: 9px; height:
 body.k-app .k-top .mark { width: 22px; height: 22px; color: var(--bone); }
 body.k-app .k-top .wordmark-sm { display: block; width: auto; height: 18px; flex: none; }
 body.k-app .k-mid { display: flex; align-items: center; gap: var(--s3); padding: 0 var(--s4); min-width: 0; }
-body.k-app .k-ws { display: inline-flex; align-items: center; gap: 8px; height: 32px; padding: 0 10px; border: 1px solid var(--hairline-2); background: none; color: var(--bone); font: 500 13px/1 var(--f-sans); }
+body.k-app .k-ws { display: inline-flex; align-items: center; gap: 8px; min-width: 0; height: 32px; padding: 0 10px; border: 1px solid var(--hairline-2); background: none; color: var(--bone); font: 500 13px/1 var(--f-sans); }
+body.k-app .k-ws span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 body.k-app .k-ws i { display: grid; place-items: center; width: 18px; height: 18px; background: var(--signal); color: #fff; font: 400 10px/1 var(--f-hud); font-style: normal; }
 body.k-app .k-right { display: flex; align-items: center; gap: var(--s3); padding: 0 var(--s4); }
 body.k-app .k-needs { display: inline-flex; align-items: center; gap: 8px; height: 28px; padding: 0 4px 0 10px; border: 1px solid rgb(255 201 77 / .45); color: var(--heat-4); font: 400 var(--t-hud)/1 var(--f-hud); letter-spacing: .06em; text-transform: uppercase; }
@@ -69,7 +70,7 @@ body.k-app .repo-page-head .k-head-copy { min-width: 0; }
 body.k-app .repo-page-head .k-head-hud { display: flex; align-items: center; flex-wrap: wrap; gap: var(--s2); margin: 0; }
 body.k-app .repo-page-head .k-head-hud a { color: var(--silver); }
 body.k-app .repo-page-head .k-ref { color: var(--steel); font: 400 var(--t-hud)/1.4 var(--f-hud); }
-body.k-app .repo-page-head .k-head-side { flex-basis: min(520px, 48%); }
+body.k-app .repo-page-head .k-head-side { flex: 0 0 auto; }
 body.k-app .k-head-copy { min-width: 260px; flex: 1 1 360px; }
 body.k-app .k-head h1 { margin: var(--s3) 0 0; color: var(--bone); font: 800 clamp(28px, 3vw, 44px)/.95 var(--f-sans); font-stretch: 125%; letter-spacing: -.03em; text-transform: uppercase; overflow-wrap: anywhere; }
 body.k-app .k-head h1 .ink { color: var(--signal); }
@@ -226,6 +227,7 @@ body.k-app .k-approval-id-agent { font: 400 11px/1.4 var(--f-mono); letter-spaci
   body.k-app .k-head-side { align-items: flex-start; width: 100%; }
   body.k-app .k-kpis { width: 100%; }
 }
+@media (min-width: 641px) and (max-width: 900px) { body.k-app .repo-page-head .k-head-side { width: auto; } body.k-app .repo-page-head .clone-pop { left: auto; right: 0; } }
 @media (max-width: 640px) {
   body.k-app .k-top { grid-template-columns: auto minmax(0, 1fr) auto; }
   body.k-app .k-top .wordmark-sm { display: none; }
