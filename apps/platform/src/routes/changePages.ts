@@ -532,7 +532,7 @@ async function renderDetail(c: Context<App>, resolved: Resolved, number: string)
   const body = html`
     ${raw(queryFlash(c))}
     <header class="k-head change-head">
-      <p class="hud">#${change.number} · ${change.head} → ${change.base} · ${change.state}</p>
+      <p class="hud">#${change.number} · <span class="ident">${change.head}</span> → <span class="ident">${change.base}</span> · ${change.state}</p>
       <h1>${change.title}</h1>
       <p class="lede">by ${raw(author)} · mergeability:
         ${change.mergeability ? raw(stateTag(change.mergeability.status)) : html`<span class="tag muted">not evaluated</span>`}</p>

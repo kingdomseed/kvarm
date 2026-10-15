@@ -171,7 +171,7 @@ kvarm nexus forecast &lt;owner&gt;/&lt;repo&gt; --paths src/</pre>
       const badge = intent.changeSet !== null ? String(intent.changeSet).padStart(2, '0') : '··';
       const state = intent.overlapping ? 'st4' : intent.changeSet !== null ? 'st3' : 'st2';
       const where = [intent.paths[0], intent.agent].filter(Boolean).join(' · ');
-      return html`<li><span class="st ${state}">${badge}</span><div><b><a href="${raw(`${repoHref(intent.repo)}/activity#ws-${encodeURIComponent(intent.workspace)}`)}">${intent.task ?? intent.workspace}</a></b><span class="hud">${where}${multiRepo ? ` · ${intent.repo}` : ''}</span></div></li>`;
+      return html`<li><span class="st ${state}">${badge}</span><div><b><a href="${raw(`${repoHref(intent.repo)}/activity#ws-${encodeURIComponent(intent.workspace)}`)}">${intent.task ?? intent.workspace}</a></b><span class="hud ident">${where}${multiRepo ? ` · ${intent.repo}` : ''}</span></div></li>`;
     })
     .join('');
   const overlapRows = field.overlaps

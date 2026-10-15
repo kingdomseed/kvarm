@@ -108,7 +108,7 @@ export function repoPage(env: Env, opts: ShellOptions, userLogin: string | null,
   // The repository root needs no breadcrumb: the header already names it.
   const crumbs =
     opts.path && opts.tab !== 'settings' && opts.tab !== 'environments'
-      ? `<div class="crumbs hud">${breadcrumbs(repo, ref, opts.path)}</div>`
+      ? `<div class="crumbs hud ident">${breadcrumbs(repo, ref, opts.path)}</div>`
       : '';
   const clone = opts.showClone === false
     ? ''
