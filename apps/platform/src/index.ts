@@ -54,6 +54,19 @@ export { SandboxEgress } from './containers/sandboxEgress';
 
 installFetchMeter();
 
+/**
+ * Percent-decodes one path capture once. A malformed encoding stays as sent,
+ * so it misses the repo lookup like any other unknown name. A decoded slash
+ * or other invalid name character cannot match a stored name either.
+ */
+function decodePathComponent(raw: string): string {
+  try {
+    return decodeURIComponent(raw);
+  } catch {
+    return raw;
+  }
+}
+
 const app = new Hono<{ Bindings: Env }>();
 
 // Git smart HTTP gate. Mounted before every other route: paths like
@@ -64,7 +77,7 @@ app.use('*', async (c, next) => {
   const m = url.pathname.match(GIT_PATH_RE);
   if (m) {
     const [, owner, name, subpath] = m as unknown as [string, string, string, string];
-    return handleGitRequest(c, owner, name, subpath);
+    return handleGitRequest(c, decodePathComponent(owner), decodePathComponent(name), subpath);
   }
   return next();
 });

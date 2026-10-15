@@ -53,7 +53,8 @@ function randomHex(bytes: number): string {
 export function parseBasicAuth(
   header: string | undefined,
 ): { username: string; password: string } | null {
-  if (!header || !header.startsWith('Basic ')) return null;
+  // Auth scheme names are case-insensitive (RFC 9110 section 11.1).
+  if (!header || header.slice(0, 6).toLowerCase() !== 'basic ') return null;
   try {
     const decoded = atob(header.slice(6));
     const idx = decoded.indexOf(':');
