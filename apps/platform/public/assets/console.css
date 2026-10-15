@@ -28,7 +28,7 @@ body.k-app .mode button:hover { color: var(--bone); }
 body.k-app .mode button[aria-pressed='true'] { background: var(--signal); color: #fff; }
 
 body.k-app .k-shell { display: grid; grid-template-columns: 232px minmax(0, 1fr); min-height: 100vh; }
-body.k-app .k-rail { position: sticky; top: 56px; height: auto; min-height: 100vh; align-self: stretch; overflow: auto; display: flex; flex-direction: column; gap: var(--s5); padding: var(--s4) 0; border-right: 1px solid var(--hairline); }
+body.k-app .k-rail { position: sticky; top: 56px; height: auto; min-height: 0; max-height: calc(100vh - 56px); align-self: start; overflow-y: auto; display: flex; flex-direction: column; gap: var(--s5); padding: var(--s4) 0; border-right: 1px solid var(--hairline); }
 body.k-app .k-rail nav { display: grid; }
 body.k-app .k-rail a { display: flex; align-items: center; gap: 10px; min-height: 32px; padding: 0 var(--s4); border-left: 2px solid transparent; color: var(--silver); font-size: 14px; }
 body.k-app .k-rail a:hover { color: var(--bone); background: rgb(255 255 255 / .02); }
@@ -214,8 +214,8 @@ body.k-app .k-approval-id-agent { font: 400 11px/1.4 var(--f-mono); letter-spaci
 @media (max-width: 900px) {
   body.k-app .k-top { grid-template-columns: auto minmax(0, 1fr) auto; }
   body.k-app .k-top .brand { border-right: 0; padding-right: 0; }
-  body.k-app .k-shell { grid-template-columns: 1fr; }
-  body.k-app .k-rail { position: sticky; top: 56px; z-index: 30; height: auto; min-height: 0; flex-direction: row; gap: 0; padding: 0; overflow-x: auto; scrollbar-width: none; background: var(--void); border-right: 0; border-bottom: 1px solid var(--hairline); }
+  body.k-app .k-shell { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  body.k-app .k-rail { position: sticky; top: 56px; z-index: 30; height: auto; min-height: 0; max-height: none; flex-direction: row; gap: 0; padding: 0; overflow-x: auto; scrollbar-width: none; background: var(--void); border-right: 0; border-bottom: 1px solid var(--hairline); }
   body.k-app .k-rail nav { display: flex; }
   body.k-app .k-rail .k-repos, body.k-app .k-rail .k-foot { display: none; }
   body.k-app .k-rail a { min-height: 44px; white-space: nowrap; border-left: 0; border-bottom: 2px solid transparent; }
