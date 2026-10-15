@@ -57,6 +57,8 @@ body.k-app .k-repo-head { display: flex; align-items: center; gap: var(--s3); pa
 body.k-app .k-repo-head > a { color: var(--bone); font-weight: 600; }
 body.k-app .k-visibility { padding: 2px 6px; border: 1px solid var(--hairline-2); color: var(--steel); font: 400 10px/1.4 var(--f-hud); text-transform: uppercase; }
 body.k-app .k-tabs { display: flex; align-items: center; gap: 0; padding: 0 var(--s6); border-bottom: 1px solid var(--hairline); overflow-x: auto; scrollbar-width: none; }
+body.k-app .k-tab-bar { display: flex; align-items: center; padding: 0 var(--s6); border-bottom: 1px solid var(--hairline); }
+body.k-app .k-tab-bar > .k-tabs { flex: 1 1 auto; min-width: 0; padding: 0; border-bottom: 0; }
 body.k-app .k-tab { flex: none; padding: 12px var(--s3); border-bottom: 2px solid transparent; color: var(--steel); font-size: 13px; }
 body.k-app .k-tab:hover { color: var(--bone); }
 body.k-app .k-tab.active { color: var(--bone); border-bottom-color: var(--signal); }
@@ -221,7 +223,7 @@ body.k-app .k-approval-id-agent { font: 400 11px/1.4 var(--f-mono); letter-spaci
   body.k-app .k-rail a { min-height: 44px; white-space: nowrap; border-left: 0; border-bottom: 2px solid transparent; }
   body.k-app .k-rail a[aria-current='page'] { border-bottom-color: var(--signal); }
   body.k-app .k-head, body.k-app .k-grid, body.k-app .k-content, body.k-app .k-legacy-content, body.k-app .k-repo-content { padding-inline: var(--s4); }
-  body.k-app .k-tabs, body.k-app .k-repo-head { padding-inline: var(--s4); }
+  body.k-app .k-tabs, body.k-app .k-tab-bar, body.k-app .k-repo-head { padding-inline: var(--s4); }
   body.k-app .k-grid { grid-template-columns: 1fr; }
   body.k-app .k-head-side { align-items: flex-start; width: 100%; }
   body.k-app .k-kpis { width: 100%; }
@@ -364,7 +366,8 @@ body.k-app .clone-menu > summary { list-style: none; cursor: pointer; gap: 6px; 
 body.k-app .clone-menu > summary::-webkit-details-marker { display: none; }
 body.k-app .clone-pop { position: absolute; z-index: 20; right: 0; top: calc(100% + 6px); width: min(520px, 86vw); padding: var(--s3); border: 1px solid var(--hairline-2); background: var(--carbon); box-shadow: 0 16px 40px rgb(0 0 0 / .5); }
 body.k-app .k-tabs .tab-sep { flex: none; width: 1px; height: 18px; margin: 0 var(--s2); background: var(--hairline-2); }
-body.k-app .k-tabs .branch-picker summary { display: inline-flex; align-items: center; gap: 6px; }
+body.k-app .k-tab-bar .branch-picker summary { display: flex; align-items: center; gap: 6px; }
+body.k-app .k-tab-bar .branch-picker summary code { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; overflow-wrap: normal; }
 
 /* Dashboard: status heading with KPIs beside it, repositories as cards. */
 body.k-app .dash-head { align-items: flex-end; padding-block: var(--s6) var(--s5); }
