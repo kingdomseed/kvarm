@@ -17,9 +17,11 @@ const env = { ...(cfEnv as unknown as Env), ARTIFACTS: fakeArtifacts } as Env;
 const OWNER = 'del-owner';
 const FULL: Scope[] = ['read', 'write', 'api'];
 const tok: Record<string, string> = {};
+let ownerId = '';
 
 beforeAll(async () => {
-  tok.owner = (await mintPAT(env, await seedUser(env, OWNER), 'owner', FULL)).token;
+  ownerId = await seedUser(env, OWNER);
+  tok.owner = (await mintPAT(env, ownerId, 'owner', FULL)).token;
   installFakeGitRemote();
 });
 
@@ -63,6 +65,63 @@ describe('repo deletion', () => {
     expect(await env.DB.prepare('SELECT COUNT(*) AS n FROM change_reviews WHERE repo_id = ?').bind(id).first()).toEqual({ n: 0 });
     expect(await env.DB.prepare('SELECT COUNT(*) AS n FROM change_review_files WHERE review_id = ?').bind(review).first()).toEqual({ n: 0 });
     expect(await env.DB.prepare('SELECT COUNT(*) AS n FROM change_review_requests WHERE change_set_id = ?').bind(changeSet).first()).toEqual({ n: 0 });
+  });
+
+  it('deletes a repo that once had a stopped sandbox with its approvals and commands', async () => {
+    const { id: repoId } = await seedRepoWithCommit(env, 'had-sandbox', { owner: OWNER, visibility: 'private' });
+    const now = Date.now();
+    const agentId = crypto.randomUUID();
+    const environmentId = crypto.randomUUID();
+    const buildId = crypto.randomUUID();
+    const workspaceId = crypto.randomUUID();
+    const sandboxId = crypto.randomUUID();
+    const approvalId = crypto.randomUUID();
+    const commandId = crypto.randomUUID();
+    await env.DB.batch([
+      env.DB.prepare(
+        `INSERT INTO agents (id, owner_kind, owner_id, owner_login, name, created_by, created_at) VALUES (?, 'user', ?, ?, 'bot', ?, ?)`,
+      ).bind(agentId, ownerId, OWNER, ownerId, now),
+      env.DB.prepare(
+        `INSERT INTO environments (id, repo_id, name, os, base_ref, instance, allowed_hosts, command_policy, config_hash,
+           ready_build_id, created_by, created_at, updated_at)
+         VALUES (?, ?, 'env', 'linux', 'main', 'standard-1', '[]', '{"deny":[],"approve":[]}', 'config', ?, ?, ?, ?)`,
+      ).bind(environmentId, repoId, buildId, ownerId, now, now),
+      env.DB.prepare(
+        `INSERT INTO environment_builds (id, environment_id, repo_id, seq, status, reason, config_hash, snapshot_id, phases, output_tail, created_at, finished_at)
+         VALUES (?, ?, ?, 1, 'ready', 'create', 'config', 'snap', '{}', '', ?, ?)`,
+      ).bind(buildId, environmentId, repoId, now, now),
+      env.DB.prepare(
+        `INSERT INTO workspaces (id, repo_id, artifacts_name, task, agent, status, created_at, ref, created_by, agent_id)
+         VALUES (?, ?, ?, 'task', 'agent', 'active', ?, ?, ?, ?)`,
+      ).bind(workspaceId, repoId, `${OWNER}--had-sandbox`, now, `refs/heads/agents/${workspaceId}/x`, ownerId, agentId),
+      env.DB.prepare(
+        `INSERT INTO sandboxes (id, repo_id, environment_id, build_id, workspace_id, owner_user_id, agent_id, token_id, status,
+           task, last_active_at, expires_at, run_expires_at, sleep_snapshot_id, created_at, stopped_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, NULL, 'stopped', 'task', ?, ?, ?, NULL, ?, ?)`,
+      ).bind(sandboxId, repoId, environmentId, buildId, workspaceId, ownerId, agentId, now, now + 86400_000, now + 86400_000, now, now),
+      env.DB.prepare(
+        `INSERT INTO sandbox_approvals (id, sandbox_id, repo_id, command, requested_by, status, created_at, expires_at)
+         VALUES (?, ?, ?, 'npm install', ?, 'used', ?, ?)`,
+      ).bind(approvalId, sandboxId, repoId, ownerId, now, now + 3600_000),
+      env.DB.prepare(
+        `INSERT INTO sandbox_commands (id, sandbox_id, actor, command, exit_code, duration_ms, policy, approval_id, created_at)
+         VALUES (?, ?, ?, 'npm install', 0, 10, 'approved', ?, ?)`,
+      ).bind(commandId, sandboxId, `user:${ownerId}`, approvalId, now),
+    ]);
+
+    const del = await call(env, 'DELETE', `/api/v1/repos/${OWNER}/had-sandbox`, { token: tok.owner });
+
+    const count = async (table: string, id: string) =>
+      (await env.DB.prepare(`SELECT COUNT(*) AS n FROM ${table} WHERE id = ?`).bind(id).first<{ n: number }>())!.n;
+    expect({
+      status: del.status,
+      body: del.text,
+      repos: await count('repos', repoId),
+      workspaces: await count('workspaces', workspaceId),
+      sandboxes: await count('sandboxes', sandboxId),
+      approvals: await count('sandbox_approvals', approvalId),
+      commands: await count('sandbox_commands', commandId),
+    }).toEqual({ status: 200, body: '{"deleted":true}', repos: 0, workspaces: 0, sandboxes: 0, approvals: 0, commands: 0 });
   });
 
   it('deleting a forked parent detaches the forks instead of failing whole', async () => {

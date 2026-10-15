@@ -664,12 +664,13 @@ export function agentWorkspaceDenial(actor: Actor, cmd: RefCommand, owners: Map<
   return null;
 }
 
-/** Statements that remove a repo's workspaces, for the repo DELETE batch (before its change sets). */
+/** Statements that remove a repo's workspaces and the sandboxes that reference them, for the repo DELETE batch (before its change sets). */
 export function workspaceCleanupStatements(db: D1Database, repoId: string): D1PreparedStatement[] {
   return [
     repoSignalCleanup(db, repoId),
     repoShareCleanup(db, repoId),
     db.prepare('DELETE FROM workspace_dependencies WHERE repo_id = ?').bind(repoId),
+    db.prepare('DELETE FROM sandboxes WHERE repo_id = ?').bind(repoId),
     db.prepare('DELETE FROM workspaces WHERE repo_id = ?').bind(repoId),
   ];
 }
