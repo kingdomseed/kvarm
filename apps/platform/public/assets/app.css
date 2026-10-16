@@ -4,6 +4,7 @@ body.k-app:not(.k-landing) a:hover { color: var(--bone); }
 body.k-app:not(.k-landing) .wrap { width: min(1200px, calc(100% - 32px)); margin-inline: auto; }
 body.k-app:not(.k-landing) .muted, body.k-app:not(.k-landing) .hint { color: var(--steel); }
 body.k-app:not(.k-landing) .hud { color: var(--steel); font: 400 var(--t-hud)/1.45 var(--f-hud); letter-spacing: .06em; text-transform: uppercase; }
+body.k-app:not(.k-landing) .ident { text-transform: none; }
 body.k-app:not(.k-landing) .mono, body.k-app:not(.k-landing) code { font-family: var(--f-mono); }
 body.k-app:not(.k-landing) .card, body.k-app:not(.k-landing) .panel { min-width: 0; margin: 0 0 var(--s4); border: 1px solid var(--hairline); background: var(--carbon); }
 body.k-app:not(.k-landing) .card { padding: var(--s4); }
@@ -19,6 +20,7 @@ body.k-app:not(.k-landing) .linklike { padding: 0; border: 0; background: none; 
 body.k-app:not(.k-landing) form { min-width: 0; }
 body.k-app:not(.k-landing) label { display: block; margin: var(--s3) 0 var(--s1); color: var(--steel); font: 400 var(--t-hud)/1.4 var(--f-hud); text-transform: uppercase; }
 body.k-app:not(.k-landing) input, body.k-app:not(.k-landing) select, body.k-app:not(.k-landing) textarea { width: 100%; min-width: 0; padding: 9px 10px; border: 1px solid var(--hairline-2); background: var(--void); color: var(--bone); font: 400 var(--t-sm)/1.4 var(--f-sans); }
+body.k-app:not(.k-landing) input[type="checkbox"], body.k-app:not(.k-landing) input[type="radio"] { width: auto; }
 body.k-app:not(.k-landing) textarea { min-height: 120px; resize: vertical; }
 body.k-app:not(.k-landing) input:focus, body.k-app:not(.k-landing) select:focus, body.k-app:not(.k-landing) textarea:focus { outline: 1px solid var(--signal-hi); outline-offset: 1px; }
 body.k-app:not(.k-landing) pre, body.k-app:not(.k-landing) .code, body.k-app:not(.k-landing) .codeview { max-width: 100%; overflow: auto; border: 1px solid var(--hairline); background: var(--void); color: var(--silver); font: 400 12px/1.6 var(--f-mono); }
@@ -28,6 +30,7 @@ body.k-app:not(.k-landing) .flash { padding: var(--s3); border: 1px solid var(--
 body.k-app:not(.k-landing) .flash.ok, body.k-app:not(.k-landing) .ok { border-color: var(--signal-hi); color: var(--signal-hi); }
 body.k-app:not(.k-landing) .flash.err, body.k-app:not(.k-landing) .err { border-color: var(--heat-3); color: var(--heat-3); }
 body.k-app:not(.k-landing) .badge, body.k-app:not(.k-landing) .chip, body.k-app:not(.k-landing) .tag { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border: 1px solid var(--hairline-2); color: var(--steel); font: 400 var(--t-hud)/1.3 var(--f-hud); text-transform: uppercase; }
+body.k-app:not(.k-landing) code.chip { font-family: var(--f-mono); letter-spacing: 0; text-transform: none; }
 body.k-app:not(.k-landing) .tag-ready, body.k-app:not(.k-landing) .signal { color: var(--signal-hi); }
 body.k-app:not(.k-landing) .warn { color: var(--heat-4); }
 body.k-app:not(.k-landing) .repo-head { padding: var(--s5); border-bottom: 1px solid var(--hairline); }
@@ -42,8 +45,9 @@ body.k-app:not(.k-landing) .branch-picker summary { cursor: pointer; color: var(
 body.k-app:not(.k-landing) .branch-picker ul { position: absolute; z-index: 5; right: 0; top: 100%; min-width: 180px; max-height: 240px; margin: 0; padding: var(--s2); overflow: auto; border: 1px solid var(--hairline-2); background: var(--carbon); list-style: none; }
 body.k-app:not(.k-landing) .crumbs { padding: var(--s3) var(--s4); color: var(--steel); overflow-wrap: anywhere; }
 body.k-app:not(.k-landing) .repo-row, body.k-app:not(.k-landing) .tree-row, body.k-app:not(.k-landing) .commit-row, body.k-app:not(.k-landing) .issue-row, body.k-app:not(.k-landing) .ws-row, body.k-app:not(.k-landing) .pair-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); min-width: 0; padding: var(--s3) 0; border-bottom: 1px solid var(--hairline); }
-body.k-app:not(.k-landing) .repo-row > *, body.k-app:not(.k-landing) .tree-row > *, body.k-app:not(.k-landing) .commit-row > *, body.k-app:not(.k-landing) .issue-row > *, body.k-app:not(.k-landing) .ws-row > * { min-width: 0; overflow-wrap: anywhere; }
+body.k-app:not(.k-landing) .repo-row > *, body.k-app:not(.k-landing) .tree-row > *, body.k-app:not(.k-landing) .commit-row > *, body.k-app:not(.k-landing) .issue-row > *, body.k-app:not(.k-landing) .ws-row > *, body.k-app:not(.k-landing) .pair-row > * { min-width: 0; overflow-wrap: anywhere; }
 body.k-app:not(.k-landing) .repo-row:last-child, body.k-app:not(.k-landing) .tree-row:last-child { border-bottom: 0; }
+body.k-app:not(.k-landing) .pair-row { flex-wrap: wrap; }
 body.k-app:not(.k-landing) .repo-row .badge { margin-left: var(--s2); }
 body.k-app:not(.k-landing) .repo-row .muted { margin-top: 3px; font-size: var(--t-xs); }
 body.k-app:not(.k-landing) .table { width: 100%; border-collapse: collapse; text-align: left; }
@@ -155,7 +159,7 @@ body.k-app:not(.k-landing) .k-approval-command { min-width: 0; color: var(--silv
 }
 @media (max-width: 640px) {
   body.k-app:not(.k-landing) .repo-head { padding: var(--s4) 0; }
-  body.k-app:not(.k-landing) .repo-row, body.k-app:not(.k-landing) .tree-row, body.k-app:not(.k-landing) .commit-row, body.k-app:not(.k-landing) .issue-row, body.k-app:not(.k-landing) .ws-row { align-items: flex-start; flex-direction: column; }
+  body.k-app:not(.k-landing) .repo-row, body.k-app:not(.k-landing) .tree-row, body.k-app:not(.k-landing) .commit-row, body.k-app:not(.k-landing) .issue-row, body.k-app:not(.k-landing) .ws-row, body.k-app:not(.k-landing) .pair-row { align-items: flex-start; flex-direction: column; }
   body.k-app:not(.k-landing) .candidate-grid, body.k-app:not(.k-landing) .issue-facts { grid-template-columns: 1fr; }
   body.k-app:not(.k-landing) .k-approval-row { grid-template-columns: 1fr; }
   body.k-app:not(.k-landing) .table { display: block; max-width: 100%; min-width: 0; overflow-x: auto; white-space: nowrap; }

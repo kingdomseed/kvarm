@@ -294,7 +294,7 @@ async function renderTreeView(
     }
     readmeHtml = html`
       <section class="card readme-doc">
-        <div class="readme-head hud">${entry.name}</div>
+        <div class="readme-head hud ident">${entry.name}</div>
         <article class="md readme-body">${raw(await rendered.text())}</article>
       </section>
     `;

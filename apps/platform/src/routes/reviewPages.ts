@@ -206,7 +206,7 @@ function inboxItem(item: InboxItem, csrf: string, viewerId: string, error: strin
   return html`
     <article class="k-inbox-item ${escalation ? 'heat' : 'signal'}" id="${idBase}">
       <div class="k-inbox-body">
-        <span class="hud">${owner}/${name} · #${item.number} · into ${item.base} · ${timeAgo(item.createdAtMs)}</span>
+        <span class="hud"><span class="ident">${owner}/${name}</span> · #${item.number} · into <span class="ident">${item.base}</span> · ${timeAgo(item.createdAtMs)}</span>
         <h3><a href="${raw(changeHref(owner, name, item.number))}">${item.title}</a></h3>
         <p class="k-inbox-tags">${raw(reasonTags)}${raw(readinessTag)}<span class="tag">approvals ${item.approvals.count}/${item.approvals.required}</span>${raw(
           item.approvals.humansRequired ? html`<span class="tag">human ${item.approvals.humans}/${item.approvals.humansRequired}</span>` : '',
