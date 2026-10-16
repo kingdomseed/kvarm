@@ -126,13 +126,13 @@ export function repoPage(env: Env, opts: ShellOptions, userLogin: string | null,
     <div class="clone-pop">${raw(clone)}</div>
   </details>`) : ''}
 </header>
-<nav class="tabs k-tabs">${raw(tabHtml)}
-  <span class="spacer"></span>
+<div class="k-tab-bar">
+  <nav class="tabs k-tabs">${raw(tabHtml)}</nav>
   <details class="branch-picker">
     <summary><span class="hud muted">ref</span> <code>${ref}</code> ▾</summary>
     <ul>${raw(branchList || '<li class="muted">loading…</li>')}</ul>
   </details>
-</nav>
+</div>
 <div class="k-repo-content">
   ${raw(crumbs)}
   ${raw(body)}

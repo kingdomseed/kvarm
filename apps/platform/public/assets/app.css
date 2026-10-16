@@ -40,9 +40,9 @@ body.k-app:not(.k-landing) .clone-box .clone-cli { flex: 1 0 100%; border-top: 1
 body.k-app:not(.k-landing) .tabs { display: flex; align-items: center; gap: 0; max-width: 100%; overflow-x: auto; border-bottom: 1px solid var(--hairline); }
 body.k-app:not(.k-landing) .tab { flex: none; padding: 11px var(--s3); border-bottom: 2px solid transparent; color: var(--steel); text-transform: capitalize; }
 body.k-app:not(.k-landing) .tab.active { border-bottom-color: var(--signal); color: var(--bone); }
-body.k-app:not(.k-landing) .branch-picker { position: relative; margin-left: auto; padding: var(--s2); border-left: 1px solid var(--hairline); }
+body.k-app:not(.k-landing) .branch-picker { position: relative; flex: none; max-width: 40%; padding: var(--s2); border-left: 1px solid var(--hairline); }
 body.k-app:not(.k-landing) .branch-picker summary { cursor: pointer; color: var(--silver); }
-body.k-app:not(.k-landing) .branch-picker ul { position: absolute; z-index: 5; right: 0; top: 100%; min-width: 180px; max-height: 240px; margin: 0; padding: var(--s2); overflow: auto; border: 1px solid var(--hairline-2); background: var(--carbon); list-style: none; }
+body.k-app:not(.k-landing) .branch-picker ul { position: absolute; z-index: 5; right: 0; top: 100%; min-width: 180px; max-width: min(480px, 90vw); max-height: 240px; margin: 0; padding: var(--s2); overflow: auto; overflow-wrap: anywhere; border: 1px solid var(--hairline-2); background: var(--carbon); list-style: none; }
 body.k-app:not(.k-landing) .crumbs { padding: var(--s3) var(--s4); color: var(--steel); overflow-wrap: anywhere; }
 body.k-app:not(.k-landing) .repo-row, body.k-app:not(.k-landing) .tree-row, body.k-app:not(.k-landing) .commit-row, body.k-app:not(.k-landing) .issue-row, body.k-app:not(.k-landing) .ws-row, body.k-app:not(.k-landing) .pair-row { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); min-width: 0; padding: var(--s3) 0; border-bottom: 1px solid var(--hairline); }
 body.k-app:not(.k-landing) .repo-row > *, body.k-app:not(.k-landing) .tree-row > *, body.k-app:not(.k-landing) .commit-row > *, body.k-app:not(.k-landing) .issue-row > *, body.k-app:not(.k-landing) .ws-row > *, body.k-app:not(.k-landing) .pair-row > * { min-width: 0; overflow-wrap: anywhere; }
