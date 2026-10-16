@@ -6,7 +6,7 @@
 
 import { parseRefAdvertisement, type GitRef } from '@kvarm/gitops';
 import type { RepoRow } from '../db/repos';
-import { getGitToken } from './tokens';
+import { artifactsAuthorization, getGitToken } from './tokens';
 
 /** Scoped repo handle; auto-disposes (the capability is an RPC stub). */
 export async function withRepo<T>(
@@ -140,7 +140,7 @@ export async function listRefs(
 ): Promise<{ branches: GitRef[]; tags: GitRef[]; head: GitRef | null }> {
   const token = await getGitToken(env, repo.artifacts_name, 'read');
   const res = await fetch(`${repo.artifacts_remote}/info/refs?service=git-upload-pack`, {
-    headers: { Authorization: `Basic ${btoa(`kvarm:${token}`)}` },
+    headers: { Authorization: artifactsAuthorization(token) },
   });
   if (!res.ok) throw new Error(`info/refs failed (${res.status})`);
   const body = new Uint8Array(await res.arrayBuffer());

@@ -69,7 +69,7 @@ async function sampleCommit() {
   return { commit, objects: [commit, tree, blob] };
 }
 
-const WRITE_AUTH = `Basic ${btoa('kvarm:write-tok')}`;
+const WRITE_AUTH = 'Bearer write-tok';
 
 describe('artifactsPusher', () => {
   it('pushes one ref with the write token and a pack of the given objects; ok moves the view generation', async () => {

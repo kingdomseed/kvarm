@@ -15,7 +15,7 @@
 import { lsRefsRequest, parseLsRefs, pickRef, refCandidates } from '@kvarm/gitops';
 import type { RepoRow } from '../db/repos';
 import type { LazyRepo } from '../artifacts/repo';
-import { getReadCapableToken } from '../artifacts/tokens';
+import { artifactsAuthorization, getReadCapableToken } from '../artifacts/tokens';
 import { REF_TTL_SECONDS, compareKeys, readJson, refGeneration, writeJson } from '../cache/compare';
 
 export const EMPTY_TREE = '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
@@ -179,7 +179,7 @@ export async function lsRefs(ctx: ResolveContext, names: string[]): Promise<Map<
     res = await fetch(`${ctx.repo.artifacts_remote}/git-upload-pack`, {
       method: 'POST',
       headers: {
-        Authorization: `Basic ${btoa(`kvarm:${token}`)}`,
+        Authorization: artifactsAuthorization(token),
         'Content-Type': 'application/x-git-upload-pack-request',
         Accept: 'application/x-git-upload-pack-result',
         'Git-Protocol': 'version=2',
